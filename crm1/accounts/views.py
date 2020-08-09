@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from .models import *
 from .forms import OrderForm
+from django.forms import inlineformset_factory
 
 def home(request):
     orders = Order.objects.all()
@@ -69,6 +70,14 @@ def delete_order(request, pk):
     return render(request, 'accounts/delete_order.html', {'order':order})
 
 def create_order(request, pk):
-    form = OrderForm()
+    customer = get_object_or_404(Customer, id=pk)
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=10)
+    formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)
 
-    return render(request, 'accounts/create_order.html', {'form':form})
+    if request.method == 'POST':
+        formset = OrderFormSet(request.POST, instance=customer)
+        if formset.is_valid():
+            formset.save()
+            return redirect('accounts:home')
+
+    return render(request, 'accounts/create_order.html', {'formset':formset})

@@ -9,7 +9,7 @@
       <div class="card-body">
         <form method="post">
           {% csrf_token %}
-          {{ form|crispy }}
+          {{ formset|crispy }}
           <button class="btn btn-primary" type="submit">Create</button>
         </form>
       </div>
