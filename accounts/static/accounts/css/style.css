@@ -1,0 +1,27 @@
+body {
+  margin:0px;
+  padding:0px;
+  background-color: #ebeff5;
+
+}
+.row {
+  margin:20px;
+}
+
+#card1 {
+  color:#ffffff;
+  font-weight: bold;
+  background-color: #0018F9;
+}
+
+#card2 {
+  color:#ffffff;
+  font-weight: bold;
+  background-color: #4169E1;
+}
+
+#card3 {
+  color:#ffffff;
+  font-weight: bold;
+  background-color: #4286f4;
+}
