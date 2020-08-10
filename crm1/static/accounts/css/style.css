@@ -25,3 +25,14 @@ body {
   font-weight: bold;
   background-color: #4286f4;
 }
+
+#user{
+  color:#ffffff;
+  font-size:18px;
+  margin-right: 20px;
+}
+
+#logout{
+  font-size:18px;
+  margin-right: 20px;
+}

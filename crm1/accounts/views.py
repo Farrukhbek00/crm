@@ -2,8 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from .models import *
-from .forms import OrderForm
+from .forms import OrderForm, UserForm
 from django.forms import inlineformset_factory
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
 
 def home(request):
     orders = Order.objects.all()
@@ -81,3 +84,34 @@ def create_order(request, pk):
             return redirect('accounts:home')
 
     return render(request, 'accounts/create_order.html', {'formset':formset})
+
+
+def registerPage(request):
+    form = UserForm()
+
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:login')
+
+    return render(request, 'accounts/register.html', {'form':form})
+
+
+def loginPage(request):
+    form = AuthenticationForm()
+
+    if request.method == 'POST':
+        user = authenticate(request, username=request.POST.get('username'), password=request.POST.get('password'))
+        if user is not None:
+            login(request, user)
+            return redirect('accounts:home')
+        else:
+            messages.error(request, 'Username or password is wrong')
+
+    return render(request, 'accounts/login.html', {'form':form})
+
+
+def logoutPage(request):
+    logout(request)
+    return redirect('accounts:login')

@@ -1,6 +1,6 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <img src="{% static 'accounts/media/logo.png' %}" alt="">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -15,4 +15,10 @@
 
     </ul>
   </div>
+  {% if request.user.is_authenticated %}
+    <ul style="padding-top:5px;"class="navbar-nav">
+      <li id="user" class="nav-item"><p>Hello, {{request.user}}</p></li>
+      <li id="logout" class="nav-item"><a href="{% url 'accounts:logout' %}">Logout</a></li>
+    </ul>
+  {% endif %}
 </nav>
