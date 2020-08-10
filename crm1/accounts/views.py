@@ -7,6 +7,7 @@ from django.forms import inlineformset_factory
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from .filters import OrderFilter
 
 def home(request):
     orders = Order.objects.all()
@@ -38,11 +39,12 @@ def products(request):
 def customer(request, pk):
     customer = get_object_or_404(Customer, id=pk)
     orders = customer.order_set.all()
-    print(orders)
+    filter = OrderFilter(request.GET, queryset=orders)
 
     context = {
         'customer':customer,
         'orders':orders,
+        'filter':filter,
     }
 
     return render(request, 'accounts/customer.html', context)

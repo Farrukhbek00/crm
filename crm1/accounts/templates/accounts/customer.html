@@ -47,7 +47,10 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <a class="btn btn-primary" href="">Search</a>
+        <form method="GET">
+          {{ filter.form}}
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
       </div>
     </div>
   </div>
@@ -69,7 +72,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for order in orders %}
+            {% for order in filter.qs %}
             <tr>
               <td>{{ order.product }}</td>
               <td>{{ order.note }}</td>
