@@ -1,0 +1,39 @@
+{% extends 'accounts/base.html' %}
+
+<!-- {% load static %} -->
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <div id="card1" class="card text-center">
+      <div class="card-header">
+        <p>Total Orders</p>
+      </div>
+      <div class="card-body">
+        {{ total_orders }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div id="card2" class="card text-center">
+      <div class="card-header">
+        <p>Orders Delivered</p>
+      </div>
+      <div class="card-body">
+        {{ orders_delivered }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div id="card3" class="card text-center">
+      <div class="card-header">
+        <p>Orders Pending</p>
+      </div>
+      <div class="card-body">
+        {{ orders_pending }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

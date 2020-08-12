@@ -7,4 +7,4 @@ class OrderFilter(django_filters.FilterSet):
     start_date= django_filters.DateFilter(field_name='date_created', lookup_expr='date__gt')
     class Meta:
         model = Order
-        fields = ['product', 'status', 'note',]
+        fields = ['product', 'status', 'note']

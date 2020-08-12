@@ -15,10 +15,8 @@
 
     </ul>
   </div>
-  {% if request.user.is_authenticated %}
     <ul style="padding-top:5px;"class="navbar-nav">
       <li id="user" class="nav-item"><p>Hello, {{request.user}}</p></li>
       <li id="logout" class="nav-item"><a href="{% url 'accounts:logout' %}">Logout</a></li>
     </ul>
-  {% endif %}
 </nav>
