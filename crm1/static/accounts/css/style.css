@@ -36,3 +36,9 @@ body {
   font-size:18px;
   margin-right: 20px;
 }
+
+.profile-pic {
+  border-radius:50%;
+  width:200px;
+  height: 200px;
+}

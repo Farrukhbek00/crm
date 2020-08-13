@@ -1,0 +1,34 @@
+{% extends 'accounts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div style="text-align:center;" class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <a class="btn btn-warning btn-block" href="{% url 'accounts:user' %}">Back to Profile</a>
+        <br>
+        <h1>Account Settings</h1>
+        <br>
+        {% if request.user.customer.profile_img %}
+        <img class="profile-pic" src="{{ request.user.customer.profile_img.url }}" alt="Account_Img">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

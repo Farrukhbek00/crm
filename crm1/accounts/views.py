@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from .models import *
-from .forms import OrderForm, UserForm
+from .forms import OrderForm, UserForm, CustomerForm
 from django.forms import inlineformset_factory
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -11,6 +11,25 @@ from .filters import OrderFilter
 from django.contrib.auth.decorators import login_required
 from .decorators import authenticated_user, allowed_users, admin_only
 from django.contrib.auth.models import Group
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def account(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:user')
+
+    context = {
+    'form': form,
+    }
+    return render(request, 'accounts/account.html', context)
+
 
 @allowed_users(allowed_roles=['customer'])
 def user(request):
@@ -27,6 +46,7 @@ def user(request):
     }
 
     return render(request, 'accounts/user.html', context)
+
 
 @admin_only
 @login_required(login_url='/login/')
@@ -48,7 +68,7 @@ def home(request):
 
     return render(request, 'accounts/dashboard.html', context)
 
-@admin_only
+
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='/login/')
 def products(request):
@@ -131,10 +151,7 @@ def registerPage(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            Customer.objects.create(name=request.POST['username'])
-            group = Group.objects.get(name='customer')
-            user.groups.add(group)
+            form.save()
             return redirect('accounts:login')
 
     return render(request, 'accounts/register.html', {'form':form})

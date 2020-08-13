@@ -4,6 +4,7 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  {% if 'admin' in request.user.groups.all %}
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
@@ -15,6 +16,16 @@
 
     </ul>
   </div>
+  {% else %}
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'accounts:account' %}">Settings <span class="sr-only">(current)</span></a>
+      </li>
+
+    </ul>
+  </div>
+  {% endif %}
     <ul style="padding-top:5px;"class="navbar-nav">
       <li id="user" class="nav-item"><p>Hello, {{request.user}}</p></li>
       <li id="logout" class="nav-item"><a href="{% url 'accounts:logout' %}">Logout</a></li>
